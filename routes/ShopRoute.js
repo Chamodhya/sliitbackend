@@ -5,4 +5,4 @@ const ShopController=require('../controller/ShopController')
 
 router.post('/create',ShopController.createShop)
  
-module.exports=router hay
+module.exports=router
