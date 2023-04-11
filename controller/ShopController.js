@@ -23,16 +23,25 @@ const createShop = (req, res) => {
         else{
             const newImage=new Shop({
                 title:req.body.title,
-                imageUrl:{
-                    data:req.file.filename,
-                    contentType:'image/png'
-                }
+                imageUrl:req.file.filename
             })
             newImage.save().then(()=>res.send('success')).catch()  
         }
     });
 }
 
+const getShop= (req, res, next) => {
+    Shop.find()
+      .then((shops) => {
+        res.json(shops);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error });
+      });
+  }
+
+
 module.exports = {
-    createShop,
+    createShop,getShop
 };

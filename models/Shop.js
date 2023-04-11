@@ -7,8 +7,7 @@ const shopSchema=new Schema({
     },
     title: String,
     imageUrl: {
-        data:Buffer,
-        contentType:String
+       type:String
     }
 })
 
