@@ -12,6 +12,13 @@ const CustomerRoute=require('./routes/CustomerRoute')
 const FuelStationRoute=require('./routes/FuelStationRoute')
 const ShopRoute=require('./routes/ShopRoute')
 
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with the appropriate origin URL or '*' to allow requests from any origin
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 const url = 'mongodb+srv://sangeethnavodya33:san123navodya@cluster0.hzfaqmo.mongodb.net/?retryWrites=true&w=majority';
 async function connect(){
   try{
@@ -34,4 +41,4 @@ app.use('/register',AuthRoute)
 app.use('/register',AdminRoute)
 app.use('/register',CustomerRoute)
 app.use('/register',FuelStationRoute)
-app.use('/shop',ShopRoute)
+app.use('/shop',ShopRoute) 

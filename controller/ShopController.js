@@ -1,35 +1,38 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const Shop = require('../models/Shop')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const Shop = require('../models/Shop');
 const multer = require('multer');
-const upload=multer.diskStorage({
-    destination:(req,file,cb)=>{
-        cb(null,'Images')
+
+// Set up multer for file upload
+const Storage = multer.diskStorage({
+    destination: 'upload',
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
     }
 })
 
-const createShop = (req, res, next) => {
-    console.log(req.body)
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
-    const document = new Shop({
-        title: req.body.title,
-        imageUrl: { 
-            data:req.file.filename,
-            contentType:'image/png'
+const upload = multer({
+    storage: Storage
+}).single('photo')
+
+const createShop = (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(err)
+        }
+        else{
+            const newImage=new Shop({
+                title:req.body.title,
+                imageUrl:{
+                    data:req.file.filename,
+                    contentType:'image/png'
+                }
+            })
+            newImage.save().then(()=>res.send('success')).catch()  
         }
     });
-    document.save() 
-        .then(() => {
-            res.json({ id: document._id });
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).json({ error });
-        });
 }
 
 module.exports = {
-    createShop
-}
+    createShop,
+};
