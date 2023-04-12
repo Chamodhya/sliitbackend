@@ -28,6 +28,9 @@ async function connect(){
     console.log(e);
   } 
 }
+const fileupload = require('express-fileupload'); 
+
+app.use(fileupload({useTempFiles: true}))
 
 connect();
 app.use(morgan('dev'))
@@ -41,5 +44,5 @@ app.use('/register',AuthRoute)
 app.use('/register',AdminRoute)
 app.use('/register',CustomerRoute)
 app.use('/register',FuelStationRoute)
-app.use('/shop',ShopRoute) 
+app.use('/shop',ShopRoute)  
 app.use('/upload',express.static('upload'))
