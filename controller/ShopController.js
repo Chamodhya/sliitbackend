@@ -13,7 +13,7 @@ const createShop = async (req, res, next) => {
     const opts = {
         overwrite: true,
         invalidate: true,
-        resource_type: 'auto',
+        resource_type: 'auto', 
     };
 
     try {
@@ -42,6 +42,31 @@ const createShop = async (req, res, next) => {
     }
 };
 
+const findAllShops = (req, res, next) => {
+    Shop.find().then(station => {
+        if (station) {
+            res.json({
+                massage: station
+            })
+        }
+    }
+    )
+}
+
+const getShop = async (req, res, next) => {
+    const delid = req.params.id;
+    console.log(delid);
+    try {
+        const result = await Shop.findOne({_id: delid });
+        if (!result) {
+            return res.status(404).send("Fuel station not found");
+        }
+        return res.status(200).send(result);
+    } catch (err) {
+        // Handle errors here
+    }
+}
+
 module.exports = {
-    createShop,
+    createShop,findAllShops,getShop
 };

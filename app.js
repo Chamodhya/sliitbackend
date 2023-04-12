@@ -11,6 +11,7 @@ const AdminRoute=require('./routes/AdminRoute')
 const CustomerRoute=require('./routes/CustomerRoute')
 const FuelStationRoute=require('./routes/FuelStationRoute')
 const ShopRoute=require('./routes/ShopRoute')
+const ItemRoute=require('./routes/ItemRoute')
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with the appropriate origin URL or '*' to allow requests from any origin
@@ -45,4 +46,5 @@ app.use('/register',AdminRoute)
 app.use('/register',CustomerRoute)
 app.use('/register',FuelStationRoute)
 app.use('/shop',ShopRoute)  
+app.use('/item',ItemRoute)
 app.use('/upload',express.static('upload'))
